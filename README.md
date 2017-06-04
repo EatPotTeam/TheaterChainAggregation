@@ -5,7 +5,7 @@ the theater chain aggregation for the system analysis course
 
 ## Environment
 
-python3.5
+python3.5, sqlite
 
 
 
