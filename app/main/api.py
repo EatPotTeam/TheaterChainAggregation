@@ -1,3 +1,4 @@
+import os
 from flask import jsonify, request
 from .. import db
 from .database_operation import create_database
@@ -201,6 +202,6 @@ def unlockSeat(id):
 @main.route('/api/update', methods=['GET'])
 def update():
     cityId = 5  # guangzhou
-    appKey = '9a74f1b39739139d30b397fb0098d124'  # the key for query the info api
+    appKey = os.environ.get('API_APPKEY') or '9a74f1b39739139d30b397fb0098d124'  # the key for query the info api
     create_database(appKey, cityId)
     return '<h1>Database update success!</h1>'
