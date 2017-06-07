@@ -21,11 +21,7 @@ def allMovie():
             'movieName': movie.title,
             'pic_url': movie.poster
         })
-    response = {
-        'results': results
-    }
-    print(response)
-    return jsonify(response)
+    return jsonify(results)
 
 
 @main.route('/api/movie/<int:id>/', methods=['GET'])
@@ -53,8 +49,7 @@ def findMovieById(id):
             'release_date': movie.release_date,
             'also_known_as': movie.also_known_as
         }
-        response['result'] = result
-    return jsonify(response)
+    return jsonify(result)
 
 
 @main.route('/api/cinema/', methods=['GET'])
@@ -72,10 +67,7 @@ def allCinema():
             'longitude': cinema.longitude,
             'trafficRoutes': cinema.trafficRoutes
         })
-    response = {
-        'results': results
-    }
-    return jsonify(response)
+    return jsonify(results)
 
 
 @main.route('/api/cinema/<int:id>/', methods=['GET'])
@@ -108,10 +100,8 @@ def cinemaBroadcast(id):
         item['broadcast'] = broadcast_list
         lists.append(item)
     response = {
-        'result': {
-            'cinema_info': cinema_info,
-            'lists': lists
-        }
+        'cinema_info': cinema_info,
+        'lists': lists
     }
     return jsonify(response)
 
@@ -130,10 +120,7 @@ def movieOnCinema(id):
             'latitude': cinema.latitude,
             'longitude': cinema.longitude
         })
-    response = {
-        'result': result
-    }
-    return jsonify(response)
+    return jsonify(result)
 
 
 @main.route('/api/broadcast/<int:id>/', methods=['GET'])
@@ -147,10 +134,7 @@ def getSeats(id):
             'row': seat.row,
             'col': seat.col
         })
-    response = {
-        'result': result
-    }
-    return jsonify(response)
+    return jsonify(result)
 
 
 @main.route('/api/broadcast/<int:id>', methods=['POST'])
@@ -158,17 +142,17 @@ def lockSeat(id):
     broadcast = Broadcast.query.get_or_404(id)
     print(request.json)
     info = request.json
-    if info is None or info == '':
+    if not info:
         return jsonify({
             'result': 'no seat info'
-        })
+        }), 400
     else:
         seat_exist = Seat.query.filter_by(
             broadcast_id=broadcast.id, row=int(info['row']), col=int(info['col'])).count()
         if seat_exist > 0:
             return jsonify({
                 'result': 'seat has been lock'
-            })
+            }), 401
         else:
             seat = Seat(row=int(info['row']), col=int(info['col']))
             broadcast.seats.append(seat)
@@ -184,10 +168,10 @@ def lockSeat(id):
 def unlockSeat(id):
         broadcast = Broadcast.query.get_or_404(id)
         info = request.json
-        if info is None or info == '':
+        if not info:
             return jsonify({
                 'result': 'no seat info'
-            })
+            }), 400
         else:
             seat = Seat.query\
                 .filter_by(broadcast_id=broadcast.id, row=int(info['row']), col=int(info['col']))\
