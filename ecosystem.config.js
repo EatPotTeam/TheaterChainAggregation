@@ -9,7 +9,7 @@ module.exports = {
     {
       name      : 'eatpotmovie-tca-ci',
       script    : './deploy.sh',
-      interpreter: '/usr/bin/bash',
+      interpreter: '/bin/bash',
       env: {
         COMMON_VARIABLE: 'true'
       },
