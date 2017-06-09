@@ -6,7 +6,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'No build needed!'
+                sh './ci/build.sh'
             }
         }
 

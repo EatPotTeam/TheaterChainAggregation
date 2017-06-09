@@ -17,7 +17,6 @@ module.exports = {
       //   NODE_ENV: 'production'
       // },
       env_dev : {
-        API_APPKEY: 'gg'
       }
     }
   ],
