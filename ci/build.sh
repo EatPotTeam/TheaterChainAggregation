@@ -6,6 +6,6 @@ source ./venv/bin/activate
 
 export API_APPKEY=$(cat /var/www/eatpotmovie-tca-ci/appkey)
 
-pip3 install -r requirements.txt
+pip3 install -r requirement.txt
 
 exit 0
